@@ -1,0 +1,25 @@
+{
+  "name": "typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node src",
+    "build": "tsc && node dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kang-Dayeon/typescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kang-Dayeon/typescript/issues"
+  },
+  "homepage": "https://github.com/Kang-Dayeon/typescript#readme",
+  "devDependencies": {
+    "@types/node": "^20.2.5"
+  }
+}

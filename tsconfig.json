@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs", // 자바스크립트 모듈: AMD, node.js: commonjs
+    "esModuleInterop": true, // 오픈소스 자바스크립트 라이브러리 중 amd방식으로 동작하는 경우 commonjs방식으로 동작하는 타입스크립트 코드에 혼란을 줄 수 있어 true로 설정
+    "target": "es5", // 트랜스파일할 대상 자바스크립트의 버전 설정
+    "moduleResolution": "node", // module키의 값에 따라 설정. amd: classic, commonjs: node
+    "outDir": "dist", // baseUrl 설정값을 기준으로 했을 때 하위 디렉터리의 이름. 빌드된 결과가 dist 디렉터리에 만들어짐
+    "baseUrl": ".", // outDir과 함께 트랜스파일된 자바스크립트 파일을 저장하는 디렉터리를 설정
+    "sourceMap": true, // 변환된 자바스크립트 코드가 타입스크립트 코드의 어디에 해당하는지 알려주며, 소스맵 파일은 주로 디버깅할 때 사용한다
+    "downlevelIteration": true, // 생성기(generator)라는 타입스크립트 구문을 정상적으로 동작하게 하기 위해 true로 설정
+    "noImplicitAny": false, // any와 같은 타입일 경우 오류메세지가 나오는데 오류메세지를 나오지 않게 하려면 false로 설정
+    "paths": { "*": ["node_modules/*"] } // import문에서 from 부분을 해석할 때 찾아야 하는 디렉터리를 설정
+  },
+  "include": ["src/**/*"]
+}
