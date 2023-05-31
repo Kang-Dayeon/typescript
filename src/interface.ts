@@ -62,3 +62,20 @@
 // }
 // let jack4: IPerson4 = new Person4('Jack', 32)
 // console.log(jack4) // Person4 {name: 'Jack', age: 32'
+
+// ** 추상 클래스 **
+abstract class AbstractPerson5{
+    // abstract 키워드로 추상 클래스 만듬
+    abstract name: string
+    constructor( public age?: number) {}
+}
+
+class Person5 extends AbstractPerson5 {
+    constructor(public name: string, age?: number) {
+        super(age)
+    }
+}
+
+let jack5 : Person5 = new Person5('Jack', 32)
+console.log(jack5) // Person5 {age: 32, name: 'Jack'}
+
