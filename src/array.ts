@@ -27,7 +27,7 @@
 
 // ** for...in 문 **
 //배열
-let names = ['Jack', 'Jane', 'Steve']
+// let names = ['Jack', 'Jane', 'Steve']
 // for(let index in names){
 //     const name = names[index]
 //     console.log(`[${index}]: ${name}`) //[0]: Jack [1]: Jane [2]: Steve
