@@ -83,9 +83,40 @@
 // const fixed = (cb: (a: number, number?) => number): void => {} // 타입스크립트가 해석하지 못하는 부분에 변수를 삽입하고 타입을 명시하여 해결
 
 // ** range 함수 구현 **
+// 1-100까지
 const range = (from: number, to:number): number[] => {
     return from < to ? [from, ...range(from + 1, to)] : [] // 재귀 함수 스타일로 동작
 }
 
-let numbers: number[] = range(1, 9 + 1)
-console.log(numbers) // [1,2,3,4,5,6,7,8,9]
+const fold = <T>(array: T[], callback: (result: T, val: T) => T, initValue: T) => {
+    let result: T = initValue
+    for(let i = 0; i < array.length; i++){
+        const value = array[i]
+        result = callback(result, value)
+    }
+    return result
+}
+
+// let numbers: number[] = range(1, 100 + 1)
+//
+// let result = fold(numbers, (result, value) => result + value, 0)
+// console.log(result) // 5050
+
+// 1-100 홀수의 합 구하기
+const filter = <T>(array: T[], callback: (value:T, index?: number) => boolean): T[] => {
+    let result: T[] = []
+    for(let index: number = 0; index < array.length; ++index){
+        const value = array[index]
+        if(callback(value, index))
+            result = [...result, value]
+    }
+    return result
+}
+
+let numbers: number[] = range(1, 100 + 1)
+const isOdd = (n: number): boolean => n % 2 != 0
+let result = fold(
+    filter(numbers, isOdd),
+    (result, value) => result + value, 0
+)
+console.log(result) // 2500
