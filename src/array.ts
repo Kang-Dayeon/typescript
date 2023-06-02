@@ -113,10 +113,37 @@ const filter = <T>(array: T[], callback: (value:T, index?: number) => boolean): 
     return result
 }
 
+// let numbers: number[] = range(1, 100 + 1)
+// const isOdd = (n: number): boolean => n % 2 != 0
+// let result = fold(
+//     filter(numbers, isOdd),
+//     (result, value) => result + value, 0
+// )
+// console.log(result) // 2500
+
+// 1-100 짝수의 합 구하기
+// let numbers: number[] = range(1, 100 + 1)
+// const isEven = (n: number): boolean => n % 2 == 0
+// let result = fold(
+//     filter(numbers, isEven),
+//     (result, value) => result + value, 0
+// )
+// console.log(result) // 2550
+
+// map 배열 데이터 가공하기
+// 타입 T가 Q로 바뀔 수 있다는 전제로 구현한 예
+const map = <T, Q>(array: T[], callback: (value: T, index?: number) => Q): Q[] => {
+    let result: Q[] = []
+    for(let index = 0; index < array.length; ++index){
+        const value = array[index]
+        result = [...result, callback(value, index)]
+    }
+    return result
+}
+
 let numbers: number[] = range(1, 100 + 1)
-const isOdd = (n: number): boolean => n % 2 != 0
 let result = fold(
-    filter(numbers, isOdd),
+    map(numbers, value => value * value),
     (result, value) => result + value, 0
 )
-console.log(result) // 2500
+console.log(result) // 338350
