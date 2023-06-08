@@ -84,18 +84,18 @@
 
 // ** range 함수 구현 **
 // 1-100까지
-const range = (from: number, to:number): number[] => {
-    return from < to ? [from, ...range(from + 1, to)] : [] // 재귀 함수 스타일로 동작
-}
-
-const fold = <T>(array: T[], callback: (result: T, val: T) => T, initValue: T) => {
-    let result: T = initValue
-    for(let i = 0; i < array.length; i++){
-        const value = array[i]
-        result = callback(result, value)
-    }
-    return result
-}
+// const range = (from: number, to:number): number[] => {
+//     return from < to ? [from, ...range(from + 1, to)] : [] // 재귀 함수 스타일로 동작
+// }
+//
+// const fold = <T>(array: T[], callback: (result: T, val: T) => T, initValue: T) => {
+//     let result: T = initValue
+//     for(let i = 0; i < array.length; i++){
+//         const value = array[i]
+//         result = callback(result, value)
+//     }
+//     return result
+// }
 
 // let numbers: number[] = range(1, 100 + 1)
 //
@@ -103,15 +103,15 @@ const fold = <T>(array: T[], callback: (result: T, val: T) => T, initValue: T) =
 // console.log(result) // 5050
 
 // 1-100 홀수의 합 구하기
-const filter = <T>(array: T[], callback: (value:T, index?: number) => boolean): T[] => {
-    let result: T[] = []
-    for(let index: number = 0; index < array.length; ++index){
-        const value = array[index]
-        if(callback(value, index))
-            result = [...result, value]
-    }
-    return result
-}
+// const filter = <T>(array: T[], callback: (value:T, index?: number) => boolean): T[] => {
+//     let result: T[] = []
+//     for(let index: number = 0; index < array.length; ++index){
+//         const value = array[index]
+//         if(callback(value, index))
+//             result = [...result, value]
+//     }
+//     return result
+// }
 
 // let numbers: number[] = range(1, 100 + 1)
 // const isOdd = (n: number): boolean => n % 2 != 0
@@ -132,18 +132,32 @@ const filter = <T>(array: T[], callback: (value:T, index?: number) => boolean): 
 
 // map 배열 데이터 가공하기
 // 타입 T가 Q로 바뀔 수 있다는 전제로 구현한 예
-const map = <T, Q>(array: T[], callback: (value: T, index?: number) => Q): Q[] => {
-    let result: Q[] = []
-    for(let index = 0; index < array.length; ++index){
-        const value = array[index]
-        result = [...result, callback(value, index)]
+// const map = <T, Q>(array: T[], callback: (value: T, index?: number) => Q): Q[] => {
+//     let result: Q[] = []
+//     for(let index = 0; index < array.length; ++index){
+//         const value = array[index]
+//         result = [...result, callback(value, index)]
+//     }
+//     return result
+// }
+//
+// let numbers: number[] = range(1, 100 + 1)
+// let result = fold(
+//     map(numbers, value => value * value),
+//     (result, value) => result + value, 0
+// )
+// console.log(result) // 338350
+
+// ** tuple **
+type ResultType = [boolean, string]
+
+const doSomething = (): ResultType => {
+    try {
+        throw new Error('Some error occurs...')
+    } catch(e) {
+        return [false, e.message]
     }
-    return result
 }
 
-let numbers: number[] = range(1, 100 + 1)
-let result = fold(
-    map(numbers, value => value * value),
-    (result, value) => result + value, 0
-)
-console.log(result) // 338350
+const [result, errorMessage] = doSomething()
+console.log(result, errorMessage) // false Some error occurs...
