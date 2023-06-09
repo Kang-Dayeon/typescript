@@ -84,9 +84,9 @@
 
 // ** range 함수 구현 **
 // 1-100까지
-// const range = (from: number, to:number): number[] => {
-//     return from < to ? [from, ...range(from + 1, to)] : [] // 재귀 함수 스타일로 동작
-// }
+export const range = (from: number, to:number): number[] => {
+    return from < to ? [from, ...range(from + 1, to)] : [] // 재귀 함수 스타일로 동작
+}
 //
 // const fold = <T>(array: T[], callback: (result: T, val: T) => T, initValue: T) => {
 //     let result: T = initValue
