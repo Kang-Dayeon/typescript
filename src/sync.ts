@@ -111,5 +111,96 @@ import {readFile, readFileSync} from "fs";
 //     .then(value => console.log(value)) // {name: 'Jack', age: 32}
 
 // ** Promise.reject **
-Promise.reject(new Error('에러발생'))
-    .catch((err: Error) => console.log('error:', err.message)) // error: 에러발생
+// Promise.reject(new Error('에러발생'))
+//     .catch((err: Error) => console.log('error:', err.message)) // error: 에러발생
+
+// ** then-chain **
+// Promise.resolve(1)
+//     .then((value: number) => {
+//         console.log(value) // 1
+//         return Promise.resolve(true)
+//     })
+//     .then((value: boolean) => {
+//         console.log(value) // true
+//         return [1, 2, 3]
+//     })
+//     .then((value: number[]) => {
+//         console.log(value) // [1, 2, 3]
+//         return {name: 'Jack', age: 32}
+//     })
+//     .then((value: {name: string, age: number}) => {
+//         console.log(value) // {name: 'Jack', age: 32}
+//     })
+
+// ** Array.every **
+// const isAllTrue = (values: boolean[]) => values.every((value => value == true))
+//
+// console.log(
+//     isAllTrue([true, true, true]), // true
+//     isAllTrue([false, true, true]) // false
+// )
+
+// ** Promise.all **
+// all(프로미스 객체 배열: Promise[]): Promise<해소된 값들의 배열(혹은 any)>
+// const getAllResolvedResult = <T>(promises: Promise<T>[]) => Promise.all(promises)
+//
+// getAllResolvedResult<any>([Promise.resolve(true), Promise.resolve('hello')])
+//     .then(result => console.log(result)) // [true, 'hello']
+//
+// getAllResolvedResult<any>([Promise.reject(new Error('error')), Promise.resolve(1)])
+//     .then(result => console.log(result)) // 호출안됨
+//     .catch(error => console.log('error:', error.message)) // error: error
+
+// ** Array.some **
+// const isAnyTrue = (values: boolean[]) => values.some((value) => value == true)
+//
+// console.log(
+//     isAnyTrue([false, true, false]), // true
+//     isAnyTrue([false, false, false]) // false
+// )
+
+// ** Promise.race **
+// race(프로미스 객체 배열: Promise[]): Promise<가장 먼저 해소된 객체의 값 타입(혹은 error)>
+// Promise.race([Promise.resolve(true), Promise.resolve('hello')])
+//     .then(value => console.log(value)) // true
+//
+// Promise.race([Promise.resolve(true), Promise.reject(new Error('hello'))])
+//     .then(value => console.log(value)) // true
+//     .catch(error => console.log(error.message)) // 호출되지 않음
+//
+// Promise.race([Promise.reject(new Error('error')), Promise.resolve(true)])
+//     .then(value => console.log(value)) // 호출되지 않음
+//     .catch(error => console.log(error.message)) // error
+
+// ** async/await 구문 **
+// const test = async () => {
+//     const value = await Promise.resolve(1)
+//     console.log(value) // 1
+// }
+// test()
+
+// const test1 = async() => { // 화살표함수 구문
+//     await Promise 객체 혹은 값
+// }
+// async function test2(){ // function 키워드 함수 구문
+//     await Promise 객체 혹은 값
+// }
+
+// ** 화살표 함수 형태로 async 함수를 구현한 예 **
+const test1 = async () => {
+    let value = await 1
+    console.log(value) // 1
+    value = await Promise.resolve(1)
+    console.log(value) // 1
+}
+
+// ** function 함수 형태로 async 함수를 구현한 예 **
+async function test2(){
+    let value = await 'hello'
+    console.log(value) // hello
+    value = await Promise.resolve('hello')
+    console.log(value) // hello
+}
+
+test1()
+test2()
