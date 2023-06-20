@@ -64,17 +64,32 @@ import {readFile, readFileSync} from "fs";
 // })
 
 // ** 비동기 방식 API인 readFile을 호출하는 내용을 프로미스로 구현한 예 **
-// const readFilePromise = (filename: string): Promise<string> =>
-//     new Promise<string>((
-//         resolve: (value: string) => void,
-//         reject: (err: Error) => void
-//     ) => {
-//         readFile(filename, (err: Error, buffer:Buffer) => {
-//             if(err) reject(err)
-//             else resolve(buffer.toString())
-//         })
-//     })
-//
+const readFilePromise = (filename: string): Promise<string> =>
+    new Promise<string>((
+        resolve: (value: string) => void,
+        reject: (err: Error) => void
+    ) => {
+        readFile(filename, (err: Error, buffer:Buffer) => {
+            if(err) reject(err)
+            else resolve(buffer.toString())
+        })
+    })
+
+// ** async 함수와 Promise.all **
+const readFilesAll = async (filenames: string[]) => {
+    return await Promise.all(
+        filenames.map(filename => readFilePromise(filename))
+    )
+}
+
+readFilesAll(['./package.json', './tsconfig.json'])
+    .then(([packageJson, tsconfigJson]: string[]) => {
+        console.log('<package.json>:', packageJson)
+        console.log('<tsconfig.json>:', tsconfigJson)
+    })
+    .catch(err => console.log('error:', err.message))
+
+
 // readFilePromise('./package.json')
 //     .then((content: string) => {
 //         console.log(content) // package.json 파일을 읽는 내용
@@ -202,5 +217,38 @@ async function test2(){
     console.log(value) // hello
 }
 
-test1()
-test2()
+// test1()
+// test2()
+
+// test1()
+//     .then(() => test2())
+
+// 결과
+// 1
+// 1
+// hello
+// hello
+
+// const asyncReturn = async () => {
+//     return [1, 2, 3]
+// }
+//
+// asyncReturn()
+//     .then(value => console.log(value)) // [1, 2, 3]
+
+// ** async 함수 예외처리 **
+// const asyncException = async () => {
+//     throw new Error('error')
+// }
+// asyncException() // 예외 발생
+//
+// asyncException()
+//     .catch(err => console.log('error:', err.message)) // error: error
+
+const awaitReject = async () => {
+    await Promise.reject(new Error('error'))
+}
+// awaitReject() // 비정상 종료
+
+awaitReject()
+    .catch(err => console.log('error:', err.message)) // error: error
