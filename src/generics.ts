@@ -69,39 +69,80 @@ const obj = {
 // )
 
 // ** 합집합 타입 **
-type NumberOrString = number | string
-let ns: NumberOrString = 1
-ns = 'hello'
+// type NumberOrString = number | string
+// let ns: NumberOrString = 1
+// ns = 'hello'
+//
+// // ** 교집합 타입 **
+// const mergeObjects = <T, U>(a: T, b:U): T & U => ({...a, ...b})
+//
+// type IName = {name: string}
+// type IAge = {age: number}
+//
+// const nameAndAge : IName & IAge = mergeObjects({name: 'Jack'}, {age: 32})
+// console.log(nameAndAge) // {name: 'Jack', age: 32}
+//
+// // ** 합집합 타입 구분 **
+// // tag라는 이름의 공통 속성이 있다.
+// interface ISquare {tag: 'square', size: number}
+// interface IRectangle {tag:'rectangle', width: number, height: number}
+// interface ICircle {tag:'circle', radius: number}
+//
+// // 위 인터페이스의 각각의 객체
+// const square: ISquare = {tag: 'square', size: 10}
+// const rectangle: IRectangle = {tag:'rectangle', width: 4, height: 5}
+// const circle: ICircle = {tag:'circle', radius: 10}
+//
+// // 객체를 모두 받아서 면적을 계산해주는 함수
+// type IShape = ISquare | IRectangle | ICircle
+// const calcArea = (shape: IShape): number => {
+//     switch (shape.tag){
+//         case 'square': return shape.size * shape.size
+//         case 'rectangle': return shape.width * shape.height
+//         case 'circle': return Math.PI * shape.radius * shape.radius
+//     }
+//     return 0
+// }
 
-// ** 교집합 타입 **
-const mergeObjects = <T, U>(a: T, b:U): T & U => ({...a, ...b})
+// console.log(calcArea(square), calcArea(rectangle), calcArea(circle)) // 100 20 314.1592653589793
 
-type IName = {name: string}
-type IAge = {age: number}
 
-const nameAndAge : IName & IAge = mergeObjects({name: 'Jack'}, {age: 32})
-console.log(nameAndAge) // {name: 'Jack', age: 32}
 
-// ** 합집합 타입 구분 **
-// tag라는 이름의 공통 속성이 있다.
-interface ISquare {tag: 'square', size: number}
-interface IRectangle {tag:'rectangle', width: number, height: number}
-interface ICircle {tag:'circle', radius: number}
+class Bird {
+    fly(){console.log(`I'm flying`)}
+}
+class Fish {
+    swim(){console.log(`I'm swimming`)}
+}
+//
+// const flyOrSwim = (o: Bird | Fish): void => {
+//     if(o instanceof Bird){
+//         o.fly()
+//     } else if(o instanceof Fish){
+//         o.swim()
+//     }
+// }
+//
+// [new Bird, new Fish].forEach(flyOrSwim)
+// I'm flying
+// I'm swimming
 
-// 위 인터페이스의 각각의 객체
-const square: ISquare = {tag: 'square', size: 10}
-const rectangle: IRectangle = {tag:'rectangle', width: 4, height: 5}
-const circle: ICircle = {tag:'circle', radius: 10}
-
-// 객체를 모두 받아서 면적을 계산해주는 함수
-type IShape = ISquare | IRectangle | ICircle
-const calcArea = (shape: IShape): number => {
-    switch (shape.tag){
-        case 'square': return shape.size * shape.size
-        case 'rectangle': return shape.width * shape.height
-        case 'circle': return Math.PI * shape.radius * shape.radius
-    }
-    return 0
+// 사용자 정의 타입 가드 함수
+const isFlyable = (o: Bird | Fish): o is Bird => {
+    return o instanceof Bird
 }
 
-console.log(calcArea(square), calcArea(rectangle), calcArea(circle)) // 100 20 314.1592653589793
+const isSwimable = (o: Bird | Fish): o is Fish => {
+    return o instanceof Fish
+}
+
+const swimOrFly = (o: Fish | Bird) => {
+    if(isSwimable(o))
+        o.swim()
+    else if(isFlyable(o))
+        o.fly()
+}
+
+[new Bird, new Fish].forEach(swimOrFly)
+// I'm flying
+// I'm swimming
