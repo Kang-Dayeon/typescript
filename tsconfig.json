@@ -3,5 +3,9 @@
   "compilerOptions": {
     "outDir": "build", //자바스크립트가 생성될 디렉토리 정하는 것
     "target": "ES6", // 어떤 버전의 자바스크립트로 컴파일 할것인가 정하는것
+    "lib": ["ES6"], // 타입스크립트가 어디서 동작할 것인가 알려주는것 => 그럼 사용할 API를 아니까 자동완성 됨
+    "strict": true,
+    "esModuleInterop": true,
+    "module": "CommonJS"
   }
 }
